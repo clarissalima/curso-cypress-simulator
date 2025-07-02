@@ -2,7 +2,12 @@ describe("Cypress Simulator", () => {
 
     beforeEach(() => {
 
-        cy.visit("./src/index.html?skipCaptcha=true")
+        cy.visit("./src/index.html?skipCaptcha=true", {
+            onBeforeLoad(win){
+                win.localStorage.setItem("cookieConsent", "accepted")
+            }
+        })
+
         cy.contains("button", "Login").click()
 
     })
