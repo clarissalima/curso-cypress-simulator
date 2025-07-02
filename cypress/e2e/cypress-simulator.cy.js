@@ -1,5 +1,11 @@
 describe("Cypress Simulator", () => {
 
+    beforeEach(() => {
+
+        cy.visit('./src/index.html?skipCaptcha=true')
+
+    })
+
     //planejando casos de teste
     it('success', () => {
 
