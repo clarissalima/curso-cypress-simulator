@@ -13,7 +13,19 @@ describe("Cypress Simulator", () => {
     })
 
     //planejando casos de teste
-    it("success", () => {
+    it.only("successfully simulates a Cypress command (e.g., cy.log('Yay!'))", () => {
+        cy.get("textarea[placeholder='Write your Cypress code here...']")
+            .type("cy.log('Yay!')")
+        cy.contains("button", "Run").click()
+
+
+        //alterando default para esperar por ate 6 segundos
+        cy.get('#outputArea', {timeout: 6000 })
+            .should("contain", "Success:")
+            .and("contain", "cy.log('Yay!') // Logged message 'Yay!'")
+            
+            //sempre tenho que verificar se o texto em questao esta visivel
+            .and("be.visible")
 
     })
 
