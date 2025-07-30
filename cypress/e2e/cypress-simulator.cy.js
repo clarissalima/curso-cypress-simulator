@@ -55,8 +55,16 @@ describe("Cypress Simulator", () => {
 
     })
 
-    it("error: valid command without parentheses", () => {
+    it("it shows an error when entering and running a valid Cypress command without parentheses (e.g., cy.visit)", () => {
 
+        cy.get("textarea[placeholder='Write your Cypress code here...']")
+            .type("cy.visit")
+        cy.contains("button", "Run").click()
+
+        cy.get('#outputArea', {timeout: 6000 })
+            .should("contain", "Error:")
+            .and("contain", "Missing parentheses on `cy.visit` command")
+            .and("be.visible")
     })
 
     it("help", () => {
