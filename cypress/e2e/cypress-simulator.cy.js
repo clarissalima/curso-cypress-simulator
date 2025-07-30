@@ -132,15 +132,6 @@ describe("Cypress Simulator", () => {
         cy.contains("#outputArea", "Running... Please wait.", { timeout: 6000 }).should("not.exist")
     })
 
-    
-    it("Captcha button states", () => {
-
-    })
-
-    it("Captcha error", () => {
-
-    })
-
     it("Run button - enabled/disabled states", () => {
 
     })
@@ -193,9 +184,30 @@ describe("Cypress simulator - cookies consent", () => {
             .should("be.equal", "declined")
 
     })
+})
 
+describe("Cypress simulator - captcha", () => {
+    beforeEach(() => {
+        cy.visit("./src/index.html")
+        cy.contains("button", "Login").click()
+    })
 
+    it("disables the captcha verify button when no answer is provided or it's cleared", () => {
+        cy.contains("button", "Verify").should("be.disabled")
 
+        cy.get("input[placeholder='Enter your answer']").type("1")
+
+        cy.contains("button", "Verify").should("be.enabled")
+
+        cy.get("input[placeholder='Enter your answer']").clear()
+
+        cy.contains("button", "Verify").should("be.disabled")
+
+    })
+
+    it("shows an error on a wrong captcha answer and goes back to its initial state", () => {
+
+    })
 
 
 })
