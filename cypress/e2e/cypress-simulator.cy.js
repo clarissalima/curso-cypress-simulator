@@ -29,7 +29,7 @@ describe("Cypress Simulator", () => {
 
     })
 
-    it.only("shows an error when entering and running an invalid Cypress command (e.g., cy.run())", () => {
+    it("shows an error when entering and running an invalid Cypress command (e.g., cy.run())", () => {
         cy.get("textarea[placeholder='Write your Cypress code here...']")
             .type("cy.run()")
         cy.contains("button", "Run").click()
@@ -43,7 +43,15 @@ describe("Cypress Simulator", () => {
 
     })
 
-    it("warning", () => {
+    it("it shows a warning when entering and running a not-implemented Cypress command (e.g., cy.contains('Login'))", () => {
+        cy.get("textarea[placeholder='Write your Cypress code here...']")
+            .type("cy.contains('Login')")
+        cy.contains("button", "Run").click()
+
+        cy.get('#outputArea', {timeout: 6000 })
+            .should("contain", "Warning:")
+            .and("contain", "The `cy.contains` command has not been implemented yet.")
+            .and("be.visible")
 
     })
 
