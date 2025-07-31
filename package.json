@@ -6,8 +6,6 @@
   "scripts": {
     "cy:open": "cypress open",
     "test": "cyoress run"
-
-
   },
   "keywords": [
     "Testing",
@@ -21,6 +19,8 @@
   "license": "MIT",
   "type": "commonjs",
   "devDependencies": {
-    "cypress": "^13.17.0"
+    "axe-core": "^4.10.2",
+    "cypress": "^13.17.0",
+    "cypress-axe": "^1.5.0"
   }
 }
