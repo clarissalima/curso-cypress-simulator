@@ -141,20 +141,55 @@ describe("Cypress Simulator", () => {
         cy.contains("button", "Run").should("be.disabled")
     })
 
-    it("Reset textarea on logout and login", () => {
+    it("clears the code input when logging off then logging in again", () => {
+        cy.get("textarea[placeholder='Write your Cypress code here...']")
+            .type("cy.log('Iaii')")
+
+        cy.get('#sandwich-menu').click()
+        cy.contains("button", "Logout").click()
+        cy.contains("button", "Login").click()
+            .should("have.value", "")
 
     })
 
-    it("Disable run button on logout and login", () => {
+    it("disables the run button when logging off then logging in again", () => {
+        cy.get("textarea[placeholder='Write your Cypress code here...']")
+            .type("cy.log('Iaii')")
+
+        cy.get('#sandwich-menu').click()
+        cy.contains("button", "Logout").click()
+        cy.contains("button", "Login").click()
+
+        cy.contains("button", "Run").should("be.disabled")
+    })
+
+    it("clears the code output when logging off then logging in again", () => {
+        cy.get("textarea[placeholder='Write your Cypress code here...']")
+            .type("cy.log('Iaii')")
+        cy.contains("button", "Run").click()
+
+        cy.get("#outputArea", { timeout: 6000 })
+            .should("contain", "Success:")
+            .and("contain", "cy.log('Iaii') // Logged message 'Iaii'")
+            .and("be.visible")
+        
+
+        cy.get('#sandwich-menu').click()
+        cy.contains("button", "Logout").click()
+        cy.contains("button", "Login").click()
+
+      
+        cy.get("#outputArea", { timeout: 6000 }).should("not.contain", "cy.log('Yay!')")
 
     })
 
-    it("Reset output on logout and login", () => {
+    it("doesn't show the cookie consent banner on the login page", () => {
+        cy.clearAllLocalStorage()
 
-    })
+        cy.reload()
 
-    it("No cookings banner on the login page", () => {
-
+        cy.contains("button", "Login").should("be.visible")
+        cy.get("#cookieConsent").should("not.be.visible")
     })
 
 })
@@ -217,6 +252,7 @@ describe("Cypress simulator - captcha", () => {
 
         cy.contains(".error", "Incorrect answer, please try again.")
             .should("be.visible")
+
         cy.get("input[placeholder='Enter your answer']").should("have.value", "")
         cy.contains("button", "Verify").should("be.disabled")
 
