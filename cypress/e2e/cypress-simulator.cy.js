@@ -118,7 +118,7 @@ describe("Cypress Simulator", () => {
 
     })
 
-    it("it shows the running state before showing the final result", () => {
+    it("shows the running state before showing the final result", () => {
         cy.get("textarea[placeholder='Write your Cypress code here...']")
             .type("cy.log('Yay!')")
         cy.contains("button", "Run").click()
@@ -132,8 +132,13 @@ describe("Cypress Simulator", () => {
         cy.contains("#outputArea", "Running... Please wait.", { timeout: 6000 }).should("not.exist")
     })
 
-    it("Run button - enabled/disabled states", () => {
-
+    it("checks the run button disabled and enabled states", () => {
+        cy.contains("button", "Run").should("be.disabled")
+        cy.get("textarea[placeholder='Write your Cypress code here...']")
+            .type("cy.log('Iaii')")
+        cy.contains("button", "Run").should("be.enabled")
+        cy.get("textarea[placeholder='Write your Cypress code here...']").clear()
+        cy.contains("button", "Run").should("be.disabled")
     })
 
     it("Reset textarea on logout and login", () => {
